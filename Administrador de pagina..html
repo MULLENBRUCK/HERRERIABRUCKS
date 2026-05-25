@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Control – Herrería Bruck's</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =====================================================
+       DESIGN TOKENS
+       ===================================================== */
+    :root {
+      --bg:           #0d0d0d;
+      --surface:      #1a1a1a;
+      --surface-2:    #222222;
+      --border:       #2e2e2e;
+      --accent:       #b86b38;
+      --accent-glow:  rgba(184,107,56,.35);
+      --text:         #f0f0f0;
+      --muted:        #888;
+      --danger:       #c0392b;
+      --success:      #27ae60;
+      --radius:       16px;
+      --radius-sm:    10px;
+      --sidebar-w:    260px;
+      --transition:   .22s ease;
+    }
+
+    /* =====================================================
+       RESET & BASE
+       ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* =====================================================
+       LOGIN SCREEN (ocupa toda la ventana)
+       ===================================================== */
+    #login-screen {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+    }
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      width: min(400px, 92vw);
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    }
+    .login-card .brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-align: center;
+      letter-spacing: .04em;
+      margin-bottom: .25rem;
+    }
+    .login-card h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+    .login-card .input-wrap { margin-bottom: 1rem; }
+    .login-card label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: .35rem;
+    }
+    .login-card input {
+      width: 100%;
+      padding: .75rem 1rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color var(--transition);
+    }
+    .login-card input:focus { outline: none; border-color: var(--accent); }
+    #login-error {
+      color: var(--danger);
+      font-size: .875rem;
+      margin-top: .5rem;
+      display: none;
+    }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+           padding: .75rem 1.5rem; border: none; border-radius: var(--radius-sm);
+           font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer;
+           transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition); }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary { background: var(--accent); color: #fff; width: 100%; margin-top: 1rem; }
+    .btn-primary:hover { box-shadow: 0 6px 20px var(--accent-glow); }
+    .btn-danger  { background: var(--danger); color: #fff; font-size: .85rem; padding: .45rem .9rem; }
+    .btn-danger:hover { box-shadow: 0 4px 12px rgba(192,57,43,.4); }
+
+    /* =====================================================
+       APP SHELL (sidebar + main)
+       ===================================================== */
+    #app-shell { display: none; flex: 1; }
+    #app-shell.visible { display: flex; }
+
+    /* =====================================================
+       SIDEBAR
+       ===================================================== */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .sidebar-header {
+      padding: 1.75rem 1.5rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-header .brand-label {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .4rem;
+    }
+    .sidebar-header h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .sidebar-nav {
+      flex: 1;
+      padding: 1.25rem .75rem;
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+    }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .7rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--muted);
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      width: 100%;
+      text-align: left;
+    }
+    .nav-btn .nav-icon { font-size: 1.1rem; width: 1.4rem; text-align: center; }
+    .nav-btn:hover { background: var(--surface-2); color: var(--text); }
+    .nav-btn.active { background: rgba(184,107,56,.15); color: var(--accent); }
+    .nav-btn.danger  { color: #e55; }
+    .nav-btn.danger:hover { background: rgba(200,50,50,.12); color: #ff6b6b; }
+    .sidebar-footer {
+      padding: 1.25rem .75rem 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* =====================================================
+       MAIN PANEL
+       ===================================================== */
+    .main-panel {
+      flex: 1;
+      min-height: 100vh;
+      padding: 2rem 2.5rem;
+      overflow-y: auto;
+    }
+    .page-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .page-tag {
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: .4rem;
+    }
+    .page-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+    .page-header p { color: var(--muted); font-size: .95rem; margin-top: .3rem; }
+
+    /* Secciones – solo la activa se muestra */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* =====================================================
+       CARDS & FORM ELEMENTS
+       ===================================================== */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+    }
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+      padding-bottom: .6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-group { margin-bottom: 1.1rem; display: flex; flex-direction: column; }
+    .form-group label {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: .4rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: .75rem 1rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color var(--transition);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { outline: none; border-color: var(--accent); }
+    .form-group select { appearance: none; cursor: pointer; }
+
+    /* Dropzone */
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.75rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      color: var(--muted);
+      font-size: .9rem;
+      position: relative;
+    }
+    .dropzone:hover,
+    .dropzone.dragging { border-color: var(--accent); background: rgba(184,107,56,.07); color: var(--text); }
+    .dropzone .drop-icon { font-size: 2rem; margin-bottom: .5rem; }
+    .dropzone #proj-imagen { display: none; }
+    #preview-img {
+      max-height: 120px;
+      border-radius: var(--radius-sm);
+      margin: .75rem auto 0;
+      display: none;
+    }
+
+    /* =====================================================
+       PROYECTOS – 2 columnas
+       ===================================================== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* Lista de proyectos */
+    .project-list { display: flex; flex-direction: column; gap: .75rem; }
+    .project-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: .75rem 1rem;
+      transition: border-color var(--transition);
+    }
+    .project-item:hover { border-color: var(--accent); }
+    .project-item img { width: 72px; height: 72px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
+    .project-item .proj-info { flex: 1; min-width: 0; }
+    .project-item .proj-info strong { display: block; font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .project-item .proj-info span { font-size: .8rem; color: var(--muted); }
+    .empty-state { color: var(--muted); font-size: .9rem; text-align: center; padding: 2rem 0; }
+
+    /* =====================================================
+       NOTIFICACIÓN FLASH
+       ===================================================== */
+    #flash {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--success);
+      color: #fff;
+      padding: .75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: .9rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .3s, transform .3s;
+      pointer-events: none;
+      z-index: 999;
+    }
+    #flash.show { opacity: 1; transform: translateY(0); }
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      :root { --sidebar-w: 64px; }
+      .sidebar-header h2,
+      .sidebar-header .brand-label,
+      .nav-btn span { display: none; }
+      .nav-btn { justify-content: center; }
+      .main-panel { padding: 1.25rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===============================================================
+       PANTALLA DE LOGIN
+       =============================================================== -->
+  <div id="login-screen">
+    <div class="login-card">
+      <p class="brand">Herrería Bruck's</p>
+      <h1>Acceso al Panel</h1>
+      <div class="input-wrap">
+        <label for="login-user">Usuario</label>
+        <input type="text" id="login-user" placeholder="admin" autocomplete="username" />
+      </div>
+      <div class="input-wrap">
+        <label for="login-pass">Contraseña</label>
+        <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" />
+        <span id="login-error">Usuario o contraseña incorrectos.</span>
+      </div>
+      <button class="btn btn-primary" id="login-btn">Ingresar al panel</button>
+    </div>
+  </div>
+
+  <!-- ===============================================================
+       APP SHELL (visible tras login)
+       =============================================================== -->
+  <div id="app-shell">
+
+    <!-- -----  Sidebar  ----- -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <p class="brand-label">Panel de control</p>
+        <h2>Herrería Bruck's</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-view="projects">
+          <span class="nav-icon">📁</span>
+          <span>Gestionar Proyectos</span>
+        </button>
+        <button class="nav-btn" data-view="contact">
+          <span class="nav-icon">📝</span>
+          <span>Datos de Contacto</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="nav-btn danger" id="logout-btn">
+          <span class="nav-icon">🚪</span>
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- -----  Panel central  ----- -->
+    <main class="main-panel">
+
+      <!-- == Vista: Gestionar Proyectos == -->
+      <div class="view active" id="view-projects">
+        <div class="page-header">
+          <p class="page-tag">Panel de control</p>
+          <h1>Gestionar Proyectos</h1>
+          <p>Agregá y eliminá trabajos del carrusel y las grillas de tu web.</p>
+        </div>
+        <div class="grid-2">
+
+          <!-- Formulario de carga -->
+          <div class="card">
+            <h3>Subir Nuevo Trabajo</h3>
+            <form id="add-project-form" novalidate>
+              <div class="form-group">
+                <label for="proj-titulo">Título del proyecto</label>
+                <input type="text" id="proj-titulo" placeholder="Ej.: Galpón industrial 400m²" />
+              </div>
+              <div class="form-group">
+                <label for="proj-categoria">Categoría</label>
+                <select id="proj-categoria">
+                  <option value="grandes">Grande – Galpones / Tinglados / Naves</option>
+                  <option value="medianos">Mediano – Pérgolas / Quinchos / Cabañas</option>
+                  <option value="chicos">Chico – Muebles / Refacciones / Menor</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="proj-descripcion">Descripción breve</label>
+                <textarea id="proj-descripcion" rows="3" placeholder="Contá brevemente el trabajo realizado…"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Foto del trabajo</label>
+                <div class="dropzone" id="dropzone">
+                  <div class="drop-icon">🖼️</div>
+                  <p>Arrastrá la imagen aquí<br>o <strong>hacé clic para elegir</strong></p>
+                  <input type="file" id="proj-imagen" accept="image/*" />
+                  <img id="preview-img" src="" alt="Vista previa" />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">✅ Publicar Proyecto en la Web</button>
+            </form>
+          </div>
+
+          <!-- Listado actual -->
+          <div class="card">
+            <h3>Proyectos Publicados</h3>
+            <div id="project-list" class="project-list">
+              <p class="empty-state">Todavía no hay proyectos guardados.</p>
+            </div>
+          </div>
+
+        </div><!-- /.grid-2 -->
+      </div><!-- /#view-projects -->
+
+      <!-- == Vista: Datos de Contacto == -->
+      <div class="view" id="view-contact">
+        <div class="page-header">
+          <p class="page-tag">Panel de control</p>
+          <h1>Datos de Contacto</h1>
+          <p>Actualizá los datos que se muestran en la web principal. Guardá los cambios para que apliquen al instante.</p>
+        </div>
+        <div class="card" style="max-width:560px">
+          <h3>Información de contacto</h3>
+          <form id="contact-form" novalidate>
+            <div class="form-group">
+              <label for="c-whatsapp">📱 Número de WhatsApp (con código de país)</label>
+              <input type="text" id="c-whatsapp" placeholder="Ej.: 543412297062" />
+            </div>
+            <div class="form-group">
+              <label for="c-instagram">📸 Enlace de Instagram</label>
+              <input type="url" id="c-instagram" placeholder="https://instagram.com/herreriabrucks" />
+            </div>
+            <div class="form-group">
+              <label for="c-tiktok">🎵 Enlace de TikTok</label>
+              <input type="url" id="c-tiktok" placeholder="https://tiktok.com/@herreriabrucks" />
+            </div>
+            <div class="form-group">
+              <label for="c-email">✉️ Correo electrónico</label>
+              <input type="email" id="c-email" placeholder="info@herreriabrucks.com.ar" />
+            </div>
+            <button type="submit" class="btn btn-primary">💾 Guardar Cambios de la Web</button>
+          </form>
+        </div>
+      </div><!-- /#view-contact -->
+
+    </main><!-- /.main-panel -->
+  </div><!-- /#app-shell -->
+
+  <!-- Notificación flash -->
+  <div id="flash">¡Cambios guardados correctamente!</div>
+
+  <!-- ===============================================================
+       JAVASCRIPT – todo inline
+       =============================================================== -->
+  <script>
+    /* ---------------------------------------------------------------
+       CONSTANTES Y HELPERS
+       --------------------------------------------------------------- */
+    const LS = {
+      get:  key => { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } },
+      set:  (key, val) => localStorage.setItem(key, JSON.stringify(val)),
+      del:  key => localStorage.removeItem(key)
+    };
+
+    const DEFAULT_CREDS = { user: 'admin', pass: 'bruck2026' };
+
+    function getCreds() {
+      return LS.get('adminCreds') || DEFAULT_CREDS;
+    }
+
+    function getProjects() { return LS.get('projects') || []; }
+    function saveProjects(arr) { LS.set('projects', arr); }
+
+    function flash(msg = '¡Cambios guardados!', color = 'var(--success)') {
+      const el = document.getElementById('flash');
+      el.textContent = msg;
+      el.style.background = color;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2800);
+    }
+
+    /* ---------------------------------------------------------------
+       AUTENTICACIÓN
+       --------------------------------------------------------------- */
+    const loginScreen = document.getElementById('login-screen');
+    const appShell    = document.getElementById('app-shell');
+
+    function isLoggedIn() { return localStorage.getItem('adminLoggedIn') === 'true'; }
+    function setSession(v) { localStorage.setItem('adminLoggedIn', v ? 'true' : 'false'); }
+
+    function showApp() {
+      loginScreen.style.display = 'none';
+      appShell.classList.add('visible');
+      renderProjectList();
+      loadContactForm();
+    }
+
+    function showLogin() {
+      loginScreen.style.display = 'flex';
+      appShell.classList.remove('visible');
+    }
+
+    // Verificar sesión al cargar
+    if (isLoggedIn()) {
+      showApp();
+    } else {
+      showLogin();
+    }
+
+    // Login submit
+    document.getElementById('login-btn').addEventListener('click', () => {
+      const user = document.getElementById('login-user').value.trim();
+      const pass = document.getElementById('login-pass').value.trim();
+      const creds = getCreds();
+      if (user === creds.user && pass === creds.pass) {
+        setSession(true);
+        document.getElementById('login-error').style.display = 'none';
+        showApp();
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    });
+
+    // Enter key en el campo contraseña
+    document.getElementById('login-pass').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('login-btn').click();
+    });
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      setSession(false);
+      showLogin();
+    });
+
+    /* ---------------------------------------------------------------
+       NAVEGACIÓN DEL SIDEBAR
+       --------------------------------------------------------------- */
+    document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Marcar activo
+        document.querySelectorAll('.nav-btn[data-view]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        // Mostrar vista
+        const target = btn.dataset.view;
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('view-' + target).classList.add('active');
+      });
+    });
+
+    /* ---------------------------------------------------------------
+       GESTIÓN DE PROYECTOS
+       --------------------------------------------------------------- */
+    // Dropzone
+    const dropzone  = document.getElementById('dropzone');
+    const fileInput = document.getElementById('proj-imagen');
+    const previewEl = document.getElementById('preview-img');
+
+    dropzone.addEventListener('click', e => {
+      if (e.target !== fileInput) fileInput.click();
+    });
+    dropzone.addEventListener('dragover', e => {
+      e.preventDefault(); dropzone.classList.add('dragging');
+    });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragging'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragging');
+      if (e.dataTransfer.files[0]) {
+        const dt = new DataTransfer();
+        dt.items.add(e.dataTransfer.files[0]);
+        fileInput.files = dt.files;
+        handleImagePreview(e.dataTransfer.files[0]);
+      }
+    });
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files[0]) handleImagePreview(fileInput.files[0]);
+    });
+
+    function handleImagePreview(file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        previewEl.src = e.target.result;
+        previewEl.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Formulario: Agregar proyecto
+    document.getElementById('add-project-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const titulo      = document.getElementById('proj-titulo').value.trim();
+      const categoria   = document.getElementById('proj-categoria').value;
+      const descripcion = document.getElementById('proj-descripcion').value.trim();
+      const file        = fileInput.files[0];
+
+      if (!titulo) { flash('El título es obligatorio.', 'var(--danger)'); return; }
+
+      const saveProject = (imagenBase64 = '') => {
+        const projects = getProjects();
+        projects.push({
+          id:          Date.now(),
+          titulo,
+          categoria,
+          descripcion,
+          imagen:      imagenBase64
+        });
+        saveProjects(projects);
+        renderProjectList();
+        e.target.reset();
+        previewEl.style.display = 'none';
+        previewEl.src = '';
+        flash('✅ ¡Proyecto publicado en la web!');
+      };
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = ev => saveProject(ev.target.result);
+        reader.readAsDataURL(file);
+      } else {
+        saveProject('');
+      }
+    });
+
+    // Renderizar lista de proyectos
+    function renderProjectList() {
+      const container = document.getElementById('project-list');
+      const projects  = getProjects();
+      container.innerHTML = '';
+
+      if (!projects.length) {
+        container.innerHTML = '<p class="empty-state">Todavía no hay proyectos guardados.</p>';
+        return;
+      }
+
+      projects.forEach(p => {
+        const item = document.createElement('div');
+        item.className = 'project-item';
+
+        const catLabels = { grandes: 'Grande', medianos: 'Mediano', chicos: 'Chico' };
+
+        item.innerHTML = `
+          ${p.imagen
+            ? `<img src="${p.imagen}" alt="${p.titulo}" />`
+            : `<div style="width:72px;height:72px;border-radius:10px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:1.75rem;flex-shrink:0;">🏗️</div>`
+          }
+          <div class="proj-info">
+            <strong>${p.titulo}</strong>
+            <span>${catLabels[p.categoria] || p.categoria}</span>
+          </div>
+          <button class="btn btn-danger delete-btn" data-id="${p.id}">🗑 Eliminar</button>
+        `;
+
+        item.querySelector('.delete-btn').addEventListener('click', () => {
+          if (confirm(`¿Eliminar el proyecto "${p.titulo}"?`)) {
+            const arr = getProjects().filter(x => x.id !== p.id);
+            saveProjects(arr);
+            renderProjectList();
+            flash('🗑️ Proyecto eliminado.', '#555');
+          }
+        });
+
+        container.appendChild(item);
+      });
+    }
+
+    /* ---------------------------------------------------------------
+       DATOS DE CONTACTO
+       --------------------------------------------------------------- */
+    function loadContactForm() {
+      const contact = LS.get('contactData') || {};
+      document.getElementById('c-whatsapp').value  = contact.whatsapp  || '543412297062';
+      document.getElementById('c-instagram').value = contact.instagram || 'https://instagram.com/herreriabrucks';
+      document.getElementById('c-tiktok').value    = contact.tiktok    || 'https://tiktok.com/@herreriabrucks';
+      document.getElementById('c-email').value     = contact.email     || 'info@herreriabrucks.com.ar';
+    }
+
+    document.getElementById('contact-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const contact = {
+        whatsapp:  document.getElementById('c-whatsapp').value.trim(),
+        instagram: document.getElementById('c-instagram').value.trim(),
+        tiktok:    document.getElementById('c-tiktok').value.trim(),
+        email:     document.getElementById('c-email').value.trim()
+      };
+      LS.set('contactData', contact);
+      flash('💾 ¡Datos de contacto actualizados en la web!');
+    });
+  </script>
+</body>
+</html>

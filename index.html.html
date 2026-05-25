@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Herrería Bruck's – Estructuras Metálicas de Alta Gama | Rosario</title>
+  <meta name="description" content="Herrería Bruck's: fabricación profesional de estructuras metálicas, galpones, pérgolas, portones y más en Rosario, Argentina. Garantía escrita y facturación electrónica disponible." />
+  <meta name="keywords" content="herrería Rosario, galpones, estructuras metálicas, pérgolas, portones, tinglados, herrería industrial" />
+
+  <!-- Fuente Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ================================================================
+       NAVBAR
+       ================================================================ -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#inicio" class="nav-logo">
+        <span class="logo-icon">⚙</span>
+        Herrería Bruck's
+      </a>
+      <nav class="nav-links" id="nav-links">
+        <a href="#inicio" class="nav-link">Inicio</a>
+        <a href="#proyectos" class="nav-link">Proyectos</a>
+        <a href="#servicios" class="nav-link">Servicios</a>
+        <a href="#cotizador" class="nav-link">Contacto</a>
+      </nav>
+      <button class="nav-cta" onclick="document.getElementById('cotizador').scrollIntoView({behavior:'smooth'})">
+        Cotizar Proyecto
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       HERO
+       ================================================================ -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <span class="hero-tag">Rosario, Argentina</span>
+      <h1 class="hero-title">
+        Estructuras Metálicas<br/>
+        <em>de Alta Gama</em>
+      </h1>
+      <p class="hero-sub">
+        Fabricación profesional con garantía escrita por contrato.<br/>
+        Facturación electrónica disponible en Rosario y Gran Rosario.
+      </p>
+      <div class="hero-actions">
+        <a href="#cotizador" class="btn-primary">Cotizar mi Proyecto →</a>
+        <a href="#proyectos" class="btn-ghost">Ver trabajos</a>
+      </div>
+      <div class="hero-badges">
+        <span class="badge">✔ Garantía Escrita</span>
+        <span class="badge">✔ Factura Electrónica</span>
+        <span class="badge">✔ Gran Rosario</span>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       PROYECTOS
+       ================================================================ -->
+  <section class="section" id="proyectos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Galería de trabajos</span>
+        <h2 class="section-title">Nuestros Proyectos</h2>
+        <p class="section-sub">Cada trabajo entregado con precisión, garantía y dedicación.</p>
+      </div>
+
+      <!-- Carrusel -->
+      <div class="carousel-wrapper" id="carousel-wrapper">
+        <div class="carousel-track" id="carousel-track"></div>
+        <button class="carousel-btn carousel-prev" id="carousel-prev" aria-label="Anterior">‹</button>
+        <button class="carousel-btn carousel-next" id="carousel-next" aria-label="Siguiente">›</button>
+        <div class="carousel-dots" id="carousel-dots"></div>
+      </div>
+
+      <!-- Pestañas de categoría -->
+      <div class="tabs-bar">
+        <button class="tab-btn active" data-cat="todos">Todos</button>
+        <button class="tab-btn" data-cat="grandes">Grandes</button>
+        <button class="tab-btn" data-cat="medianos">Medianos</button>
+        <button class="tab-btn" data-cat="chicos">Chicos</button>
+      </div>
+
+      <!-- Grilla dinámica -->
+      <div class="projects-grid" id="projects-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       SERVICIOS
+       ================================================================ -->
+  <section class="section section-alt" id="servicios">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Lo que fabricamos</span>
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <p class="section-sub">Soluciones estructurales desde el diseño hasta la instalación.</p>
+      </div>
+      <div class="services-grid">
+
+        <article class="service-card">
+          <div class="service-icon">🏭</div>
+          <h3>Galpones y Tinglados Estructurales</h3>
+          <p>Naves industriales, depósitos y tinglados de gran envergadura con perfiles de acero de alta resistencia.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🌿</div>
+          <h3>Pérgolas y Quinchos de Diseño</h3>
+          <p>Estructuras estéticas para espacios exteriores, quinchos cerrados y cabañas con terminaciones premium.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🏗</div>
+          <h3>Colocación de Chapas y Techados</h3>
+          <p>Montaje de cubiertas metálicas, chapas galvanizadas, termopanel y aislación térmico-acústica.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🚪</div>
+          <h3>Portones y Cerramientos</h3>
+          <p>Portones batientes, corredizos y automatizados. Rejas y cerramientos fijos a medida.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🪑</div>
+          <h3>Fabricación de Muebles por Mayor</h3>
+          <p>Mesas, estanterías y estructuras industriales para comercios, restaurantes y espacios gastronómicos.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🔧</div>
+          <h3>Servicios Menores y Refacciones</h3>
+          <p>Reparaciones, soldaduras, refacciones y fabricación de piezas metálicas a pedido por mayor o menor.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       COTIZADOR INTELIGENTE
+       ================================================================ -->
+  <section class="section" id="cotizador">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Presupuesto sin cargo</span>
+        <h2 class="section-title">Cotizador Inteligente</h2>
+        <p class="section-sub">Completá el formulario y recibís tu presupuesto al instante por WhatsApp.</p>
+      </div>
+
+      <form class="quote-form" id="quote-form" novalidate>
+
+        <!-- Bloque 1: Datos personales -->
+        <div class="form-block">
+          <h4 class="form-block-title">1. Tus datos</h4>
+          <div class="form-row">
+            <div class="field-group">
+              <label for="q-nombre">Nombre completo <span class="req">*</span></label>
+              <input type="text" id="q-nombre" placeholder="Ej.: Martín García" />
+              <span class="field-error" id="err-nombre"></span>
+            </div>
+            <div class="field-group">
+              <label for="q-ciudad">Ciudad / Localidad <span class="req">*</span></label>
+              <input type="text" id="q-ciudad" placeholder="Ej.: Funes, Rosario, Roldán…" />
+              <span class="field-error" id="err-ciudad"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloque 2: Proyecto -->
+        <div class="form-block">
+          <h4 class="form-block-title">2. Tu proyecto</h4>
+          <div class="form-row">
+            <div class="field-group">
+              <label for="q-tamano">Tamaño del proyecto <span class="req">*</span></label>
+              <select id="q-tamano">
+                <option value="">— Seleccioná —</option>
+                <option value="Grande">Grande – Galpones / Tinglados / Naves</option>
+                <option value="Mediano">Mediano – Pérgolas / Quinchos / Cabañas</option>
+                <option value="Chico">Chico – Muebles / Refacciones / Piezas</option>
+              </select>
+              <span class="field-error" id="err-tamano"></span>
+            </div>
+            <div class="field-group">
+              <label for="q-servicio">Tipo de servicio <span class="req">*</span></label>
+              <select id="q-servicio">
+                <option value="">— Seleccioná —</option>
+                <option value="Galpones y Tinglados">Galpones y Tinglados</option>
+                <option value="Pérgolas y Quinchos">Pérgolas y Quinchos</option>
+                <option value="Chapas y Techado">Chapas y Techado</option>
+                <option value="Portones y Cerramientos">Portones y Cerramientos</option>
+                <option value="Muebles Industriales">Muebles Industriales</option>
+                <option value="Refacciones y Reparaciones">Refacciones y Reparaciones</option>
+              </select>
+              <span class="field-error" id="err-servicio"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloque 3: Dimensiones -->
+        <div class="form-block">
+          <h4 class="form-block-title">3. Dimensiones estimadas</h4>
+          <div class="form-row form-row-3">
+            <div class="field-group">
+              <label for="q-ancho">Ancho (metros)</label>
+              <input type="number" id="q-ancho" placeholder="Ej.: 10" min="0" step="0.5" />
+            </div>
+            <div class="field-group">
+              <label for="q-largo">Largo (metros)</label>
+              <input type="number" id="q-largo" placeholder="Ej.: 20" min="0" step="0.5" />
+            </div>
+            <div class="field-group">
+              <label for="q-alto">Altura (metros)</label>
+              <input type="number" id="q-alto" placeholder="Ej.: 4" min="0" step="0.5" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloque 4: Detalles -->
+        <div class="form-block">
+          <h4 class="form-block-title">4. Comentarios adicionales</h4>
+          <div class="field-group">
+            <label for="q-comentario">Contanos más sobre tu proyecto (opcional)</label>
+            <textarea id="q-comentario" rows="4" placeholder="Ej.: Necesito un galpón con portón automatizado, con ventanas laterales y techo de termopanel…"></textarea>
+          </div>
+        </div>
+
+        <div class="form-submit-wrap">
+          <button type="submit" class="btn-whatsapp" id="btn-cotizar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Enviar Cotización por WhatsApp
+          </button>
+          <p class="form-disclaimer">Tu consulta es gratuita y sin compromiso. Te respondemos a la brevedad.</p>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       FOOTER
+       ================================================================ -->
+  <footer class="footer" id="contacto">
+    <div class="container">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <span class="footer-logo">⚙ Herrería Bruck's</span>
+          <p>Estructuras metálicas de alta gama fabricadas con precisión industrial y garantía escrita en Rosario, Argentina.</p>
+        </div>
+
+        <div class="footer-trust">
+          <h4>Nuestro compromiso</h4>
+          <ul>
+            <li>✔ Garantía escrita por contrato</li>
+            <li>✔ Facturación electrónica disponible</li>
+            <li>✔ Cobertura: Rosario y Gran Rosario</li>
+            <li>✔ Presupuesto sin cargo</li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h4>Contacto directo</h4>
+          <a class="footer-link whatsapp-link" id="footer-whatsapp"
+             href="https://wa.me/543412297062?text=Hola%20Herre%C3%ADa%20Bruck's%2C%20me%20gustar%C3%ADa%20cotizar%20mi%20proyecto..."
+             target="_blank" rel="noopener">
+            💬 WhatsApp
+          </a>
+          <a class="footer-link" id="footer-instagram"
+             href="https://instagram.com/herreriabrucks" target="_blank" rel="noopener">
+            📸 Instagram
+          </a>
+          <a class="footer-link" id="footer-tiktok"
+             href="https://tiktok.com/@herreriabrucks" target="_blank" rel="noopener">
+            🎵 TikTok
+          </a>
+          <a class="footer-link" id="footer-email"
+             href="mailto:info@herreriabrucks.com.ar">
+            ✉ info@herreriabrucks.com.ar
+          </a>
+        </div>
+
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Herrería Bruck's – Todos los derechos reservados.</p>
+        <a href="admin.html" target="_blank" class="admin-link">Panel de Administración</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
