@@ -324,7 +324,7 @@ function enviarWhatsApp() {
 
   // Obtener número (admin puede haberlo cambiado en admin.html)
   const contactData = lsGet('contactData');
-  const numero      = (contactData && contactData.whatsapp) ? contactData.whatsapp : '543412297062';
+  const numero      = (contactData && contactData.whatsapp) ? contactData.whatsapp : '5493417821960';
 
   const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank', 'noopener,noreferrer');
