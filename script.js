@@ -322,9 +322,8 @@ function enviarWhatsApp() {
   }
   msg += `\n_Cotización solicitada desde herreriabrucks.com.ar_`;
 
-  // Obtener número (admin puede haberlo cambiado en admin.html)
-  const contactData = lsGet('contactData');
-  const numero      = (contactData && contactData.whatsapp) ? contactData.whatsapp : '5493417821960';
+  // Obtener número (forzado para obviar caché del admin panel)
+  const numero = '5493417821960';
 
   const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank', 'noopener,noreferrer');
@@ -342,10 +341,11 @@ function initContacto() {
     if (el && val) el[attr] = val;
   };
 
-  if (data.whatsapp) {
-    const msg  = encodeURIComponent("Hola Herrería Bruck's, me gustaría cotizar mi proyecto...");
-    set('footer-whatsapp', 'href', `https://wa.me/${data.whatsapp}?text=${msg}`);
-  }
+  // Se deshabilita la sobrescritura dinámica de WhatsApp para forzar el número nuevo
+  // if (data.whatsapp) {
+  //   const msg  = encodeURIComponent("Hola Herrería Bruck's, me gustaría cotizar mi proyecto...");
+  //   set('footer-whatsapp', 'href', `https://wa.me/${data.whatsapp}?text=${msg}`);
+  // }
   set('footer-instagram', 'href', data.instagram);
   set('footer-tiktok',    'href', data.tiktok);
   if (data.email) {
