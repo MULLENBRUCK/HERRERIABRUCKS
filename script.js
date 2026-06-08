@@ -15,21 +15,21 @@ const PROYECTOS_EJEMPLO = [
     id:          0,
     titulo:      'Galpón Laboral 90m²',
     categoria:   'grandes',
-    descripcion: 'Nave industrial con estructura de perfiles de acero, cubierta de chapa termopanel y portón automatizado de 6 metros. Entregado con garantía escrita.',
+    descripcion: 'Estructura de 10x9 metros revestida en chapa Cincalum N°25, con cenefas de cierre y desagüe integrado. Proyecto ejecutado bajo contrato formal con reporte fotográfico diario del avance para total tranquilidad del cliente.',
     imagen:      'img/GALPON.jpg'
   },
   {
     id:          1,
     titulo:      'Pérgola de Diseño Premium',
     categoria:   'medianos',
-    descripcion: 'Pérgola de acero pintado al horno en color grafito con techo de policarbonato opalescente. Ideal para espacios exteriores residenciales.',
+    descripcion: 'Galería personalizada fabricada con perfiles de alto espesor, cubierta de policarbonato cristal y protección total con convertidor de óxido negro. Incluye cielorraso premium en machimbre de PVC color fresno y desagüe oculto.',
     imagen:      'img/PERGOLA.jpg'
   },
   {
     id:          2,
     titulo:      'Muebles por Mayor',
     categoria:   'chicos',
-    descripcion: 'Línea de mesas industriales con estructura de hierro cuadrado y tapa de madera recuperada. Fabricación en serie para espacios gastronómicos y comerciales.',
+    descripcion: 'Línea de mobiliario industrial fabricada a medida para proyectos mayoristas y minoristas. Diseños totalmente personalizados y adaptados con máxima resistencia tanto para locales comerciales como para el hogar.',
     imagen:      'img/MUEBLE.jpg'
   }
 ];
