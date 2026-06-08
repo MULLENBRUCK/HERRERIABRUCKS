@@ -13,24 +13,24 @@
 const PROYECTOS_EJEMPLO = [
   {
     id:          0,
-    titulo:      'Galpón Industrial 800m²',
+    titulo:      'Galpón Laboral 90m²',
     categoria:   'grandes',
     descripcion: 'Nave industrial con estructura de perfiles de acero, cubierta de chapa termopanel y portón automatizado de 6 metros. Entregado con garantía escrita.',
-    imagen:      ''  // se reemplaza con degradado gris
+    imagen:      'img/GALPON.jpg'
   },
   {
     id:          1,
     titulo:      'Pérgola de Diseño Premium',
     categoria:   'medianos',
     descripcion: 'Pérgola de acero pintado al horno en color grafito con techo de policarbonato opalescente. Ideal para espacios exteriores residenciales.',
-    imagen:      ''
+    imagen:      'img/PERGOLA.jpg'
   },
   {
     id:          2,
-    titulo:      'Mesa Industrial por Mayor',
+    titulo:      'Muebles por Mayor',
     categoria:   'chicos',
     descripcion: 'Línea de mesas industriales con estructura de hierro cuadrado y tapa de madera recuperada. Fabricación en serie para espacios gastronómicos y comerciales.',
-    imagen:      ''
+    imagen:      'img/MUEBLE.jpg'
   }
 ];
 
